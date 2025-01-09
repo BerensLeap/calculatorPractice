@@ -50,7 +50,7 @@ public class App {
             OperatorType type = null;
             while (type == null) {
                 System.out.print("연산 기호를 입력하세요 (+,-,*,/): ");
-                String operator = sc.next();
+                String operator = sc.next();    // sc.next(); : 잘못된 입력 소비
                 type = OperatorType.findType(operator);
 
                 if (type == null) {
@@ -63,7 +63,7 @@ public class App {
             // 계산
             try {
                 calculator.calculate(num1, num2, type);
-            } catch (ArithmeticException e) {
+            } catch (ArithmeticException e) {  // 두번째 숫자값이 0일때 예외 처리
                 System.out.println("0으로 나눌 수 없습니다.");
                 continue;
             }

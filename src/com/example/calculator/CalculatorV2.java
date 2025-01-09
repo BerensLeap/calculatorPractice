@@ -19,7 +19,7 @@ public class CalculatorV2 {
 
     public void calculate(int num1, int num2, OperatorType type) {
 
-        AbstractOperation operation = type.getOperation(); // Enum에서 연산자 읽고 연산 개별 클래스 매핑, 이 부분 자연스러운가?
+        AbstractOperation operation = type.getOperation(); // Enum에서 연산자 읽고 연산 개별 클래스 매핑, 어려웠다. 이 부분 자연스러운가?
 
         double result = operation.operate(num1, num2); // 연산
 
@@ -38,7 +38,7 @@ public class CalculatorV2 {
             for (String record : records) {
                 count++;
                 System.out.print(record);
-                if (count < size) { //마지막 기록이 아니면 쉼표
+                if (count < size) { //마지막 기록이 아니면 쉼표, 마지막 결과값일 경우 쉼표 생략.
                     System.out.print(", ");
                 }
             }
@@ -48,13 +48,13 @@ public class CalculatorV2 {
         }
     }
 
-    public void setRecords(int index, String newRecord) {
+    public void setRecords(int index, String newRecord) {      // 결과값의 setter가 왜 필요한걸가? 개별 값 수정? 아니면 전체 컬렉션 대체 ?
 
     }
 
     public void removeResult() {
         if (!records.isEmpty()) {
-            String removedValue = records.poll();
+            String removedValue = records.poll();       // 뭔가... 상식선에선 addfirst pollLost가 맞을 거 같았는데
             System.out.println("가장 오래된 결과값을 삭제했습니다, 삭제된 값: " + "[" + removedValue + "]");
         } else {
             System.out.println("삭제할 데이터가 없습니다.");
