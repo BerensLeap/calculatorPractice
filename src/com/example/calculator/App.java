@@ -22,10 +22,14 @@ public class App {
                     return;
                 } else if (sc.hasNextInt()) {
                     num1 = sc.nextInt();
-                    break;
+                    if (num1 >= 0) {
+                        break; // 문제 없으면 while문 종료
+                    } else {
+                        System.out.println("음의 정수는 입력할 수 없습니다.");
+                    }
                 } else {
                     System.out.println("잘못된 입력입니다, 숫자를 입력해주세요.");
-                    sc.next();
+                    sc.next();  // sc.next(); : 잘못된 입력 소비, 이걸 해줘야 에러없이 입력값을 다시 받을 수 있음.
                 }
             }
             System.out.println();
@@ -37,7 +41,11 @@ public class App {
                 System.out.print("두번째 숫자를 입력하세요: ");
                if (sc.hasNextInt()) {
                     num2 = sc.nextInt();
-                    break;
+                   if (num2 >= 0) {
+                       break; // 문제 없으면 while문 종료
+                   } else {
+                       System.out.println("음의 정수는 입력할 수 없습니다.");
+                   }
                 } else {
                     System.out.println("잘못된 입력입니다, 숫자를 입력해주세요.");
                     sc.next();
@@ -50,7 +58,7 @@ public class App {
             OperatorType type = null;
             while (type == null) {
                 System.out.print("연산 기호를 입력하세요 (+,-,*,/): ");
-                String operator = sc.next();    // sc.next(); : 잘못된 입력 소비
+                String operator = sc.next();
                 type = OperatorType.findType(operator);
 
                 if (type == null) {
