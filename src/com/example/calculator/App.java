@@ -4,59 +4,75 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        CalculatorV2 calculator = new CalculatorV2();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.println("계산기 전원On, 종료하려면 'exit'를 입력하세요.");
+            System.out.println("계산기 실행 중, 종료하려면 'exit'를 입력하세요.");
+            System.out.println();
 
-            System.out.print("첫번째 숫자를 입력하세요: ");
-            if (sc.hasNext("exit")) {
-                System.out.println("계산 종료");
-                break;
+
+            //첫번째 숫자 입력
+            int num1 = 0;
+            while (true) {
+                System.out.print("첫번째 숫자를 입력하세요: ");
+                if (sc.hasNext("exit")) {
+                    System.out.println("계산 종료");
+                    sc.close();
+                    return;
+                } else if (sc.hasNextInt()) {
+                    num1 = sc.nextInt();
+                    break;
+                } else {
+                    System.out.println("잘못된 입력입니다, 숫자를 입력해주세요.");
+                    sc.next();
+                }
             }
+            System.out.println();
 
-            int num1 = sc.nextInt();
-            System.out.print("두번째 숫자를 입력하세요: ");
-            int num2 = sc.nextInt();
+            //두번째 숫자 입력
 
-            System.out.print("사칙연산 기호를 입력하세요: ");
-            char operator = sc.next().charAt(0);
-
-            if (operator == '/') {
-                while (num2 == 0) {
-                    System.out.println("0으로 나눌 수 없습니다. 두번째 숫자를 다시 입력해주세요: ");
+            int num2 = 0;
+            while (true) {
+                System.out.print("두번째 숫자를 입력하세요: ");
+               if (sc.hasNextInt()) {
                     num2 = sc.nextInt();
+                    break;
+                } else {
+                    System.out.println("잘못된 입력입니다, 숫자를 입력해주세요.");
+                    sc.next();
                 }
-                double result = num1 / num2;
-                System.out.println("계산 결과: " + result);
-            } else {
-                int result = 0;
-                switch (operator) {
-                    case '+':
-                        result = num1 + num2;
-                        break;
-                    case '-':
-                        result = num1 - num2;
-                        break;
-                    case '*':
-                        result = num1 * num2;
-                        break;
-                    case '/':
-                        while (num2 == 0) {
-                            System.out.println("0으로 나눌 수 없습니다. 두번째 숫자를 다시 입력해주세요: ");
-                            num2 = sc.nextInt();
-                        }
-                        result = num1 / num2;
-                        break;
-                    default:
-                        System.out.println("올바른 연산 기호가 아닙니다.");
-                        return;
-                }
-
-                System.out.println("계산 결과: " + result);
             }
-        }
+            System.out.println();
 
-        sc.close();
+
+            //연산 기호 입력
+            OperatorType type = null;
+            while (type == null) {
+                System.out.print("연산 기호를 입력하세요 (+,-,*,/): ");
+                String operator = sc.next();
+                type = OperatorType.findType(operator);
+
+                if (type == null) {
+                    System.out.println("잘못된 연산 기호입니다, 다시 입력해주세요.");
+                }
+            }
+            System.out.println();
+
+
+            // 계산
+            try {
+                calculator.calculate(num1, num2, type);
+            } catch (ArithmeticException e) {
+                System.out.println("0으로 나눌 수 없습니다.");
+                continue;
+            }
+
+
+            // 기록 출력
+            System.out.print("계산 기록: ");
+            calculator.getRecords();
+            System.out.println();
+        }
     }
 }
